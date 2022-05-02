@@ -1,0 +1,91 @@
+import java.io.*;
+import java.util.*;
+
+public class MyClass {
+    
+    static void digit8(int[] a) {
+        System.out.println();
+      for(int i=0; i<100; i++){
+          if (a[i]%10 == 8){
+              System.out.print(a[i] + " ");
+          }
+      } 
+        
+    }
+    
+    static void primeNum(int[] a){
+        System.out.println();
+        
+        for(int i=0; i<a.length; i++){
+        boolean isPrime = true;
+        for (int j=2; j<i; j++){
+
+           if(a[i]%j==0){
+                isPrime = false;
+                break;
+            }
+        }
+        if(isPrime)
+            System.out.print(a[i] + " ");
+        }
+
+    }
+    
+    static void methodNor(int[] a){
+        System.out.println();
+        int count =0;
+        
+        for(int i=0; i<100; i++){
+            int b = a[i];
+        
+            ArrayList<Integer> list = new ArrayList<Integer>();
+            while( b != 0){
+                 int r=b%10;
+                 b = b/10;
+                 list.add(r);
+             }
+           
+        
+            ArrayList<Integer> asc = new ArrayList<Integer>() ;
+            asc.addAll(list);
+            ArrayList<Integer> dsc = new ArrayList<Integer>();
+            dsc.addAll(list);
+           
+           Collections.sort(asc); 
+           Collections.sort(dsc,Collections.reverseOrder());
+         
+           if(!( list.equals(asc) ||  list.equals(dsc) ))
+           {
+               System.out.print(a[i]+ " ");
+               count = count + 1;
+           }
+        }
+        System.out.println();
+        System.out.println (count);
+        
+    }
+    
+    
+    public static void main(String args[]) {
+    int[] a = new int[100];
+    a[0] = 1;
+    a[1] = 2;
+    
+    for(int i=2; i<100; i++)
+    {
+         a[i] = a[i-1] + ( a[i-1] - a[i-2] + 3);
+         
+    }
+    System.out.println(Arrays.toString(a));
+    
+    digit8(a);
+    System.out.println();
+    
+    primeNum(a);
+    System.out.println();
+    
+    methodNor(a);
+    System.out.println();
+    
+    }
+}
