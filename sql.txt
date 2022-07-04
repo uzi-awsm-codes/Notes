@@ -1,0 +1,910 @@
+1.Display those who working as manager using co related sub query.
+QUERY: SELECT * FROM EMP WHERE ENAME IN (SELECT ENAME FROM EMP WHERE JOB='MANAGER');
+
+2. Display those employees whose manger name is Jones and also with his manager name.
+QUERY: SELECT ENAME FROM EMP 
+       WHERE MGR=
+      (SELECT EMPNO FROM EMP 
+      WHERE ENAME='JONES');
+
+3. Define variable representing the expressions used to calculate on employee?s total annual
+renumaration.
+QUERY: SELECT SUM(SAL) FROM EMP;
+
+4. Use the variable in a statement which finds all employees who can earn 30,000 a year or more.
+QUERY:  SELECT * FROM EMP
+        WHERE SAL*12>30000;
+
+5. Find out how many mangers are there with out listing them.
+QUERY: SELECT JOB, COUNT(*) AS NUMBER 
+       FROM EMP 
+       WHERE JOB='MANAGER' 
+       GROUP BY JOB;
+
+6. Find out the avg sal and avg total remuneration for each job type remember salesman earn
+commission.
+QUERY:
+
+
+
+
+7. Check whether all employees number are indeed unique.
+QUERY: SELECT DISTINCT(EMPNO) FROM EMP;
+
+8. List out the lowest paid employees working for each manager, exclude any groups where min sal is
+less than 1000 sort the output by sal.
+QUERY: SELECT * FROM EMP A 
+       WHERE A.SAL IN 
+      (SELECT MIN(B.SAL) FROM EMP B 
+      WHERE B.MGR=A.MGR) AND 
+      A.SAL>1000
+      ORDER BY SAL;
+
+9. list ename, job, annual sal, deptno, dname and grade who earn 30000 per year and who are not
+clerks.
+QUERY: SELECT A.ENAME,A.JOB,A.SAL,A.DEPTNO,B.DNAME
+       FROM EMP A, DEPT B
+       WHERE A.DEPTNO=B.DEPTNO
+       AND A.SAL=3000 AND A.JOB!='CLERK';
+
+10. find out the job that was failed in the first half of 1983 and the same job that was failed during the
+same period on 1984.
+QUERY:
+
+
+
+
+11. find out the all employees who joined the company before their manager.
+QUERY:SELECT DISTINCT(A.EMPNO),A.ENAME
+      FROM EMP A,EMP B
+      WHERE 
+      A.HIREDATE<B.HIREDATE
+      AND A.EMPNO=B.MGR;
+12. list out the all employees by name and number along with their manager's name and number also
+display ?No Manager? who has no manager.
+QUERY: SELECT A.ENAME AS MANAGER,B.ENAME FROM EMP A,EMP B
+       WHERE A.EMPNO=B.MGR
+       UNION
+       SELECT NULL AS NOMANGER,ENAME FROM EMP
+       WHERE MGR IS NULL;
+
+13. find out the employees who earned the highest Sal in each job typed sort in descending Sal order.
+QUERY: SELECT * FROM EMP A
+       WHERE SAL IN 
+       (SELECT MAX(B.SAL) FROM EMP B 
+       WHERE A.JOB=B.JOB)
+       ORDER BY SAL;
+
+14. find out the employees who earned the min Sal for their job in ascending order.
+QUERY: SELECT * FROM EMP A 
+       WHERE SAL IN 
+       (SELECT MIN(B.SAL) FROM EMP B 
+       WHERE A.JOB=B.JOB)
+       ORDER BY SAL;
+
+15. find out the most recently hired employees in each dept order by hire date
+QUERY: SELECT * FROM EMP A 
+       WHERE 0=
+      (SELECT COUNT(HIREDATE) FROM EMP B 
+      WHERE A.HIREDATE<B.HIREDATE 
+      AND A.DEPTNO=B.DEPTNO)
+      ORDER BY HIREDATE;
+
+16. display ename, sal and deptno for each employee who earn a Sal greater than the avg of their
+department order by deptno
+QUERY: SELECT ENAME,SAL,DEPTNO FROM EMP A 
+       WHERE SAL> 
+       (SELECT AVG(B.SAL) FROM EMP B 
+       WHERE A.DEPTNO=B.DEPTNO)
+       ORDER BY DEPTNO;
+
+17. display the department where there are no employees
+QUERY: SELECT DEPTNO FROM EMP
+       GROUP BY DEPTNO
+       HAVING COUNT(*)=0;
+
+18. display the dept no with highest annual remuneration bill as compensation.
+QUERY:
+
+
+
+
+
+19. In which year did most people join the company. Display the year and number of employees
+QUERY:SELECT COUNT(*),TO_CHAR(HIREDATE,'YYYY') FROM EMP 
+      GROUP BY TO_CHAR(HIREDATE,'YYYY'); 
+
+20. display avg sal figure for the dept
+QUERY:  (SELECT AVG(B.SAL) FROM EMP B,EMP A 
+         WHERE A.DEPTNO=B.DEPTNO);
+
+21. Write a query of display against the row of the most recently hired employee. display ename hire
+date and column max date showing.
+QUERY: 
+
+
+
+
+
+22. display employees who can earn more than lowest Sal in dept no 30
+QUERY: SELECT * FROM EMP A 
+       WHERE SAL > 
+      (SELECT MIN(B.SAL) FROM EMP B WHERE DEPTNO=30);
+
+23. find employees who can earn more than every employees in dept no 30
+QUERY: SELECT * FROM EMP A 
+       WHERE SAL > 
+       (SELECT MAX(B.SAL) FROM EMP B WHERE DEPTNO=30);
+
+24. select dept name dept no and sum of Sal
+QUERY: 
+
+
+
+
+ 
+25. find out avg sal and avg total remainders for each job type
+QUERY:
+
+
+
+
+
+ 
+26. find all dept?s which have more than 3 employees
+QUERY: SELECT DEPTNO FROM EMP
+       GROUP BY DEPTNO
+       HAVING COUNT(*)>3;
+
+27. If the pay day is next Friday after 15th and 30th of every month. What is the next pay day from
+their hire date for employee in emp table
+QUERY:
+
+
+
+
+
+28. If an employee is taken by you today in your organization. And is a policy in your company to have
+a review after 9 months the joined date (and of 1st of next month after 9 months) how many days
+from today your employee has to wait for a review
+QUERY:
+
+
+
+
+
+
+29. Display employee name and his sal whose sal is greater than highest avg of dept no
+QUERY: SELECT * FROM EMP A 
+       WHERE SAL>
+      (SELECT AVG(SAL) FROM EMP B 
+       WHERE A.DEPTNO=B.DEPTNO);
+
+30. Display the 10th record of EMP table. (without using rowid)
+QUERY: SELECT * FROM EMP WHERE ROWNUM<=10
+       MINUS
+       SELECT * FROM EMP WHERE ROWNUM<=9;
+
+31. Display the half of the enames in upper case and remaining lower case
+QUERY:
+
+
+
+
+
+ 
+32. display the 10th record of emp table without using group by and rowed
+QUERY: SELECT * FROM EMP WHERE ROWNUM<=10
+       MINUS
+       SELECT * FROM EMP WHERE ROWNUM<=9;
+
+33. Delete the 10th record of emp table.
+QUERY: DELETE FROM EMP1 WHERE ENAME=
+       SELECT ENAME FROM EMP WHERE ROWNUM<=10
+       MINUS
+       SELECT ENAME FROM EMP WHERE ROWNUM<=9;
+
+34. Create a copy of emp table.
+QUERY: CREATE TABLE EMP1
+       AS
+       SELECT * FROM EMP;
+
+35. Select ename if ename exists more than once.
+QUERY: SELECT ENAME FROM EMP HAVING COUNT(ENAME)>1
+       GROUP BY ENAME;
+
+36. display all enames in reverse order
+QUERY: SELECT ENAME FROM EMP
+       ORDER BY ENAME DESC;
+
+37. Display those employee whose joining of month and grade is equal.
+QUERY:SELECT * FROM EMP WHERE TO_CHAR(HIREDATE,'MM')=GRADE;
+ 
+38. Display those employee whose joining date is available in dept no
+QUERY:SELECT * FROM EMP WHERE TO_CHAR(HIREDATE,'DD')=DEPTNO;
+ 
+39. Display those employees name as follows A ALLEN, B BLAKE
+QUERY:
+
+
+
+
+
+40. List out the employees ename, sal, PF from emp
+QUERY: SELECT ENAME,SAL,PF FROM EMP;
+
+41. Display RSPS from emp without using updating, inserting
+QUERY: 
+
+
+
+
+
+42. Create table emp with only one column empno
+QUERY: CREATE TABLE EMP
+       ( EMPNO NUMBER);
+
+43. Add this column to emp table ename Varchar(20).
+QUERY: ALTER TABLE EMP ADD COLUMN ENAME VARCHAR(20);
+
+44. OOPS! I forgot to give the primary key constraint. Add it now.
+QUERY: ALTER TABLE EMP ADD CONSTRAINT EMPNO_PK PRIMARY KEY(EMPNO);
+
+45. Now increase the length of ename column to 30 characters
+QUERY: ALTER TABLE EMP MODIFY ENAME VARCHAR(20);
+
+46. Add salary column to emp table.
+QUERY: ALTER TABLE EMP ADD SAL NUMBER(10);
+
+47. I want to give a validation saying that sal cannot be greater 10,000(note give a name to this
+column).
+QUERY: ALTER TABLE EMP ADD CONSTRAINT EMP_SAL_CHECK CHECK(SAL<10000);
+
+48. For the time being I have decided that I will not impose this validation. My boss has agreed to pay
+more than 10,000.
+QUERY: ALTER TABLE EMP DISABLE CONSTRAINT EMP_SAL_CHECK;
+
+49. My boss has changed his mind. Now he doesn?t want to pay more than 10,000. So revoke that
+salary constraint
+QUERY: ALTER TABLE EMP ENABLE CONSTRAINT EMP_SAL_CHECK;
+
+50. Add column called as mgr to your emp table
+QUERY: ALTER TABLE EMP ADD MGR NUMBER(5);
+
+51. Oh! This column should be related to empno. Give a command to add this constraint
+QUERY: ALTER TABLE EMP ADD CONSTRAINT EMP_MGR_FK FOREIGN KEY(MGR);
+
+52. Add dept no column to your emp table
+QUERY: ALTER TABLE EMP ADD DEPTNO NUMBER(5);
+
+53. This dept no column should be related to deptno column of dept table
+QUERY: ALTER TABLE EMP ADD CONSTRAINT EMP_DEPT_FK FOREIGN KEY(DEPTNO);
+
+54. Create table called as new emp. Using single command create this table as well as to get data into
+this table (use create table as)
+QUERY: CREATE TABLE EMP
+       AS
+       SELECT * FROM EMP1;
+
+55. Create table called as newemp. This table should contain only empno,ename, dname
+QUERY: CREATE TABLE NEWEMP
+       AS
+       SELECT EMPNO,ENAME,DNAME FROM EMP WHERE DNAME=(SELECT DNAME FROM DEPT);
+
+56. Delete the rows of employees who are working in the company for more than 2 years.
+QUERY: DELETE FROM EMP WHERE (SYSDATE-HIREDATE)>2*365;
+
+57. Provide a commission to employees who are not earning any commission.
+QUERY: UPDATE EMP
+       SET COMM=(SAL*10/100) WHERE COMM IS NULL;
+
+58. If any employee has commission his commission should be incremented by 10% of his salary.
+QUERY: UPDATE EMP
+       SET COMM=(SAL*10/100) WHERE COMM IS NOT NULL;
+
+59. Display employee name and department name for each employee.
+QUERY: SELECT ENAME,DEPTNO FROM EMP;
+
+60. Display employee number, name and location of the department in which he is working.
+QUERY: SELECT A.EMPNO,B.DNAME,B.LOC
+       FROM EMP A,DEPT B
+       WHERE A.DEPTNO=B.DEPTNO;
+
+61. Display ename, dname even if there no employees working in a particular department(use outer
+join).
+QUERY:SELECT A.DEPTNO,B.ENAME FROM DEPT A LEFT JOIN EMP B
+      ON A.DEPTNO=B.DEPTNO;
+
+62. Display employee name and his manager name.
+QUERY:SELECT A.ENAME,B.ENAME FROM EMP A,EMP B
+      WHERE A.EMPNO=B.MGR;
+
+63. Display the department name along with total salary in each department
+QUERY: SELECT DEPTNO,SUM(SAL) FROM EMP
+       GROUP BY DEPTNO;
+
+64. Display the department name and total number of employees in each department.
+QUERY: SELECT DEPTNO,COUNT(*) FROM EMP
+       GROUP BY DEPTNO;
+65. Alter table emp1 add constraint emp1_deptno foreign key(deptno) references dept(deptno)
+
+66. Delete from emp where job name is clerk
+QUERY: DELETE FROM EMP WHERE JOB='CLERK';
+
+67. Insert into emp without giving any further commands move to another client system and log into
+the same user give the following command
+QUERY:
+
+
+
+
+68. Are the above changes reflected in this user
+QUERY:
+
+
+
+
+69. Go to your fist system and give commit come back to the second system and give the following
+command
+QUERY:
+
+
+
+
+
+70. Display the current date and time
+QUERY: SELECT SYSTIMESTAMP FROM DUAL;
+
+71. List all the employees who have at least one person reporting to them
+QUERY: SELECT * FROM EMP 
+       WHERE EMPNO IN 
+       (SELECT MGR FROM EMP 
+       GROUP BY MGR 
+       HAVING COUNT(*)>1);
+
+72. List the name of the employees with their immediate higher authority
+QUERY:SELECT A.ENAME,B.ENAME
+      FROM EMP A,EMP B
+      WHERE A.EMPNO=B.MGR;
+
+
+73. Which department has the highest annual remuneration bill?
+QUERY:
+
+
+
+ 
+74. Write a query to display a ?*? against the row of the most recently hired employee.
+
+
+
+
+75. Write a correlated sub-query to list out the employees who earn more than the average salary of
+their department.
+QUERY: SELECT * FROM EMP A
+       WHERE SAL>
+      (SELECT AVG(B.SAL) FROM EMP B 
+       WHERE A.DEPTNO=B.DEPTNO);
+
+76. Find the nth maximum salary.
+QUERY: SELECT SAL FROM EMP 
+       WHERE (N-1)=
+      (SELECT COUNT(DISTINCT(SAL)) FROM EMP 
+       WHERE A.SAL<B.SAL);
+
+77. Select the duplicate records (Records, which are inserted, that already exist) in the EMP table.
+QUERY: SELECT DEPTNO FROM EMP
+       GROUP BY DEPTNO
+       HAVING COUNT(*)>1;
+
+78. Write a query to list the length of service of the employees (of the form n years and m months).
+QUERY: SELECT TO_CHAR(SYSDATE-HIREDATE,'YY-MM') FROM EMP;
+
+79. what is the o/p of the below query?
+QUERY:
+
+
+
+
+80. To get nth sal ?
+QUERY: SELECT SAL FROM EMP 
+       WHERE (N-1)=
+       (SELECT COUNT(DISTINCT(SAL)) FROM EMP 
+       WHERE A.SAL<B.SAL);
+
+80. To Select SAL and its occurences according to its order in assending
+QUERY:
+
+
+
+
+81. Selecting Nth Maximum Salary from emp
+QUERY: SELECT SAL FROM EMP 
+       WHERE (N-1)=
+       (SELECT COUNT(DISTINCT(SAL)) FROM EMP 
+       WHERE A.SAL<B.SAL);
+
+82. Selecting Nth Minimum Salary from emp
+QUERY: SELECT SAL FROM EMP 
+       WHERE (N-1)=
+       (SELECT COUNT(DISTINCT(SAL)) FROM EMP 
+       WHERE A.SAL>B.SAL);
+
+83. Selecting Salary and Rownum from Emp
+QUERY: SELECT SAL,ROWNUM FROM EMP;
+
+85. Selecting Alternative Rows From A Table
+QUERY: 
+
+
+
+
+86. Insert values from one table to another table
+QUERY: INSERT INTO EMP1 (ENAME,DEPTNO) SELECT ENAME,DEPTNO FROM EMP;
+
+87. Deleting duplicate rows from a table
+QUERY: DELETE FROM EMP A WHERE ROWID !=(SELECT MAX(ROWID) FROM EMP B
+                                       WHERE A.EMPNO=B.EMPNO);
+
+88. To Print A Number In Words
+
+
+
+
+89. To Find The No Of Columns In A table
+QUERY: SELECT COUNT(*) FROM EMP;
+
+90. To Get The SALs greater than 1000 in each DEPT
+QUERY: SELECT * FROM EMP A
+     WHERE A.DEPTNO IN 
+     (SELECT B.DEPTNO FROM EMP B 
+      WHERE A.DEPTNO=B.DEPTNO HAVING A.SAL>1000
+      GROUP BY B.DEPTNO);
+
+91. To print each Dept Having Sal Greater than 1000 including the sal,deptno,
+their count.
+QUERY: SELECT A.DNAME,A.DEPTNO,B.SAL,COUNT(*) FROM DEPT A,EMP B
+       WHERE A.DEPTNO=B.DEPTNO
+       HAVING B.SAL>1000
+       GROUP BY A.DEPTNO,A.DNAME,B.SAL
+       ORDER BY DNAME;
+
+92. Print the details of all the employees who are sub ordinate to Blake.
+QUERY: SELECT * FROM EMP WHERE MGR=(SELECT EMPNO FROM EMP WHERE ENAME='BLAKE');
+
+93. Display those mangers who are getting less than his employees Sal.
+QUERY: SELECT A.* FROM EMP A, EMP B
+       WHERE A.SAL<B.SAL
+       AND A.EMPNO=B.MGR;
+      
+94. Employees hire on 15th of any month are paid on the last Friday of that month. Those hired after
+9 of 13 15th are paid the last Friday of the following month. print a list of employees their hire date and first
+pay date sort those whose Sal contains first digits of their dept.
+QUERY: 
+
+
+
+
+
+95. Write query to calculate the length of employee has been with the company?
+QUERY: Select round(sysdate-hiredate) from emp;
+
+96. Given a String of the format ?nn/nn? verify that the first and last 2 characters are numbers. And
+that the middle characters is ?y? print the expressions ?Yes? if valid ?No? of not valid use the
+following values to test your solution
+QUERY: 
+
+
+
+
+
+
+97. Print a list of employees displaying ?Less Salary? if less than 1500 if exactly 1500 display as ?Exact
+Salary? and if greater than 1500 display ?More Salary?
+QUERY:
+ 
+
+
+
+
+98. List out employees name and salary increased by 15% and expressed as whole number of dollars?
+QUERY:
+
+
+
+
+
+
+99. List all employees with hire date in the format ?June 4 1988??
+QUERY: SELECT * FROM EMP WHERE HIREDATE='JUNE 4 1988';
+
+100.Produce the output of the EMP table ?EMPLOYEE_AND_JOB? for ename and job?
+QUERY: SELECT ENAME||'    ' ||JOB AS ENAME_JOB FROM EMP;
+
+1. Display employee name, his job, his dept name, his manager name, his grade and make out of an
+under department wise.
+QUERY: 
+
+
+
+
+
+2. List out all the employees name, job, and salary grade and department name for every one in the
+company except ?CLERK?. Sort on salary display the highest salary.
+QUERY: SELECT ENAME,JOB,SAL FROM EMP WHERE JOB!='CLERK'
+       ORDER BY SAL DESC;
+
+3. Display employee name, his job and his manager. Display also employees who are without
+manager.
+QUERY: SELECT A.ENAME AS MGR,A.JOB,B.ENAME
+       FROM EMP A, EMP B
+       WHERE A.EMPNO=B.MGR
+       UNION
+       SELECT ENAME,JOB,NULL
+       FROM EMP
+       WHERE MGR IS NULL;
+                       
+
+4. Find out the top 5 earner of company.
+QUERY: SELECT * FROM EMP A
+       WHERE 4>= 
+      (SELECT COUNT(DISTINCT(B.SAL) 
+      FROM EMP B 
+      WHERE A.SAL<B.SAL)
+
+5. Display the name of those employees who are getting highest salary.
+QUERY: SELECT * FROM EMP A
+       WHERE 0= 
+      (SELECT COUNT(DISTINCT(B.SAL) 
+      FROM EMP B 
+      WHERE A.SAL<B.SAL)
+6. Display those employees whose salary is equal to average of maximum and minimum.
+QUERY: SELECT * FROM EMP 
+       WHERE SAL=(SELECT MAX(SAL)+MIN(SAL)/2 FROM EMP);
+
+7. Display count of employees in each department where count greater than 3.
+QUERY: SELECT DEPTNO FROM EMP
+       GROUP BY DEPTNO
+       HAVING COUNT(*)>3;
+
+8. Display dname where at least 3 are working and display only dname.
+QUERY: SELECT DNAME FROM DEPT WHERE DEPTNO IN
+       (SELECT DEPTNO FROM EMP
+       GROUP BY DEPTNO
+       HAVING COUNT(*)>3);
+
+9. Display name of those managers name whose salary is more than average salary of company.
+QUERY: SELECT * FROM EMP A 
+       WHERE A.JOB='MANAGER' AND A.SAL> 
+       (SELECT AVG(B.SAL) FROM EMP B,EMP A
+       WHERE A.EMPNO=B.EMPNO);
+
+10. Display those managers name whose salary is more than an average salary of his employees.
+QUERY: SELECT ENAME,SAL FROM EMP A 
+       WHERE EMPNO IN
+       (SELECT MGR FROM EMP) 
+       AND A.SAL>
+      (SELECT AVG(B.SAL) FROM EMP B WHERE B.MGR=A.EMPNO);
+
+11. Display employee name, Sal, comm and net pay for those employees whose net pay are greater than or equal to any other employee salary of the company?
+QUERY:
+
+
+
+
+
+12. Display those employees whose salary is less than his manager but more than salary of any other
+managers.
+QUERY: SELECT * FROM EMP A 
+       WHERE SAL < 
+       (SELECT B.SAL FROM EMP B WHERE B.EMPNO=A.MGR)
+       AND SAL > ANY 
+       (SELECT SAL FROM EMP B WHERE B.EMPNO!=A.MGR);
+ 
+13. Display all employees names with total Sal of company with employee name.
+QUERY:
+
+
+
+
+
+14. Find out the last 5(least) earner of the company?
+QUERY: SELECT * FROM EMP A WHERE 4>=
+      (SELECT COUNT(DISTINCT(SAL) FROM EMP B
+       WHERE A.SAL>B.SAL);
+
+15. Find out the number of employees whose salary is greater than there manager salary?
+QUERY: SELECT COUNT(*) FROM EMP A, EMP B
+       WHERE A.SAL<B.SAL
+       AND A.EMPNO=B.MGR;
+
+16. Display those manager who are not working under president but they are working under any other
+manager?
+QUERY: SELECT ENAME FROM EMP 
+       WHERE MGR IN 
+      (SELECT EMPNO FROM EMP 
+       WHERE ENAME!='KING');
+
+17. Delete those department where no employee working?
+QUERY: DELETE FROM EMP 
+       WHERE DEPTNO IN
+       (SELECT DEPTNO FROM EMP
+       GROUP BY DEPTNO 
+       HAVING COUNT(*)=0);
+18. Delete those records from EMP table whose deptno not available in dept table?
+QUERY: DELETE FROM EMP WHERE DEPTNO IS NULL;
+
+19. Display those earners whose salary is out of the grade available in Sal grade table?
+QUERY: 
+
+
+
+
+
+20. Display employee name, Sal, comm. and whose net pay is greater than any other in the company?
+QUERY:
+ 
+
+
+
+
+21. Display name of those employees who are going to retire 31-dec-99. If the maximum job is period
+is 18 years?
+QUERY: SELECT * FROM EMP WHERE ROUND(SYSDATE-HIREDATE)>18*365;
+
+22. Display those employees whose salary is ODD value?
+QUERY: SELECT * FROM EMP WHERE MOD(SAL,2)=1;
+
+23. Display those employees whose salary contains at least 4 digits?
+QUERY: SELECT * FROM EMP WHERE LENGTH(SAL)>=4;
+
+24. Display those employees who joined in the company in the month of DEC?
+QUERY: SELECT * FROM EMP WHERE TO_CHAR(HIREDATE,'MM')='12';
+
+25. Display those employees whose name contains ?A??
+QUERY: SELECT * FROM EMP WHERE ENAME LIKE '%A%';
+
+26. Display those employees whose deptno is available in salary?
+QUERY: 
+
+
+
+
+27. Display those employees whose first 2 characters from hire date-last 2 characters of salary?
+QUERY:
+
+
+
+
+
+
+28. Display those employees whose 10% of salary is equal to the year of joining?
+QUERY: SELECT * FROM EMP WHERE TO_CHAR(HIREDATE,'YYYY')=(SAL*10/100);
+
+29. Display those employees who are working in sales or research?
+QUERY: SELECT * FROM EMP WHERE DEPTNO IN (SELECT DEPTNO FROM DEPT WHERE DNAME='SALES' OR DNAME='RESEARCH');
+
+30. Display the grade of Jones?
+QUERY: SELECT GRADE FROM WHERE ENAME='JONES';
+
+31. Display those employees who joined the company before 15th of the month?
+QUERY: SELECT * FROM EMP WHERE TO_CHAR(HIREDATE,'DD')<15;
+
+32. Delete those records where no of employee in a particular department is less than 3?
+QUERY: DELETE FROM EMP WHERE DEPTNO IN(SELECT DEPTNO FROM EMP GROUP BY DEPTNO HAVING COUNT(*)<3);
+
+33. Delete those employees who joined the company 21 years back from today?
+QUERY: DELETE FROM EMP WHERE ENAME IN (SELECT ENAME FROM EMP WHERE ROUND(SYSDATE-HIREDATE)>21*365);
+
+34. Display the department name the no of characters of which is equal to no of employees in any other
+department?
+QUERY: 
+
+
+
+
+35. Display those employees who are working as manager?
+QUERY: SELECT * FROM EMP WHERE JOB='MANAGER';
+
+36. Count the no of employees who are working as manager (use set operation)?
+QUERY: SELECT COUNT(*) FROM EMP
+       WHERE JOB='MANAGER';
+
+37. Display the name of then dept those employees who joined the company on the same date?
+QUERY:SELECT DNAME FROM DEPT WHERE DEPTNO IN
+      (SELECT DEPTNO FROM EMP WHERE ENAME IN 
+      (SELECT ENAME FROM EMP WHERE HIREDATE IN
+      (SELECT HIREDATE FROM EMP GROUP BY HIREDATE HAVING COUNT(*)>1)));
+
+38. Display those employees whose grade is equal to any number of Sal but not equal to first number of
+Sal?
+QUERY:
+
+
+
+
+39. Display the manager who is having maximum number of employees working under him?
+QUERY: SELECT MGR,COUNT(*) FROM EMP
+       GROUP BY MGR;
+
+
+40. List out employees name and salary increased by 15% and expressed as whole number of dollars?
+QUERY:
+
+
+
+
+
+41. Display those employees who are not working under any manger
+QUERY: SELECT * FROM EMP WHERE MGR IS NULL;
+
+42. Display grade and employees name for the dept no 10 or 30 but grade is not 4, while joined the
+company before 31-dec-82.
+QUERY:
+
+
+
+43. Update the salary of each employee by 10% increments that are not eligible for commission.
+QUERY: UPDATE FROM EMP
+       SET SAL=SAL+(SAL*10/100) WHERE COMM IS NULL;
+
+44. Delete those employees who joined the company before 31-dec-82 while there dept location is
+?NEW YORK? or ?CHICAGO?.
+QUERY: DELETE FROM EMP WHERE ENAME=
+       (SELECT A.ENAME 
+       FROM EMP A,DEPT B
+       WHERE A.DEPTNO= B.DEPTNO
+       AND B.LOC IN('NEW YORK','CHICAGO')
+       AND A.HIREDATE<'31-DEC-82'); 
+
+45. Display employee name, job, deptname, location for all who are working as managers.
+QUERY:SELECT A.ENAME,A.JOB,B.DNAME,B.LOC
+      FROM EMP A,DEPT B
+      WHERE A.DEPTNO=B.DEPTNO
+      AND A.JOB='MANAGER';
+
+46. Display those employees whose manager names is Jones, and also display there manager name.
+QUERY:SELECT A.ENAME AS MGR,B.ENAME FROM EMP A, EMP B
+      WHERE A.EMPNO=B.MGR
+      AND B.MGR=(SELECT EMPNO FROM EMP WHERE ENAME='JONES');
+
+47. Display name and salary of ford if his Sal is equal to high Sal of his grade.
+QUERY:
+
+
+
+
+
+48. Display the names of the employees who earn highest salary in their respective departments.
+QUERY: SELECT * FROM EMP
+       WHERE SAL IN(SELECT MAX(SAL) FROM EMP
+       GROUP BY DEPTNO);
+
+
+49.Display the names of employees who earn highest salaries in their respective job groups.
+QUERY:SELECT * FROM EMP 
+      WHERE SAL IN (SELECT MAX(SAL) FROM EMP 
+      GROUP BY JOB);
+
+50.Display the employee names who are working in accountings dept.
+QUERY: SELECT ENAME FROM EMP WHERE DEPTNO=(SELECT DEPTNO FROM DEPT WHERE DNAME='ACCOUNTING');
+
+1.What is SQL?
+Ans: SQL is structured query language.
+
+2.When SQL appeared?
+
+
+3.What are the usages of SQL?
+Ans: using SQL query we can reterive data from the database.
+
+4.Does SQL support programming?
+Ans: NO
+
+5.What are the subsets of SQL?
+Ans:
+
+
+
+6.What is data definition language?
+Ans: DDL is use to create,modify the structure
+
+7.What is data manipulation language?
+Ans: DML is used for data manipulation in sturusture.
+
+8.What is data control language?
+Ans: DATA CONTROL LANGUAGE IS USED TO CONTROL PRIVILEGE IN DATABASE.
+
+9.What are the type of operators available in SQL?
+Ans: arthmetic,relational,logical,special,set
+
+10.What is the SQL query to display current date?
+ans: select sysdate from dual;
+
+11.Which types of join is used in SQL widely?
+Ans: INNER JOIN
+
+12.What is “TRIGGER” in SQL?
+Ans:
+
+
+13.What is self join and what is the requirement of self join?
+Ans: self join is used to create relation in a table.
+
+14.What are set operators in SQL?
+Ans: union,union all,intersect, minus
+
+15.What is a constraint? Tell me about its various levels.
+Ans: constraint is used to aviod incorrectness of data in table.
+types:
+1.NOT NULL
+2.UNIQUE
+3.PRIMARY KEY
+4.FORIEGN KEY
+5.DEFAULT
+6.CHECK
+
+16.Write an SQL query to find names of employee start with ‘A’?
+Ans: SELECT ENAME FROM EMP WHERE ENAME LIKE 'A%';
+
+17.Write an SQL query to get third maximum salary of an employee from a table named employee_table.
+Ans: SELECT SAL FROM EMP A 
+     WHERE 2= 
+     (SELECT COUNT(DISTINCT(B.SAL)) FROM EMP B 
+     WHERE A.SAL<B.SAL);
+ 
+18.The most important DDL statements in SQL are: CREATE,DROP,ALTER,TRUNCATE
+
+19.Operators used in SELECT statements.
+
+20.SELECT statements: USED TO RETERIVE DATA FROM DATABSE.
+
+21.The SELECT INTO Statement is most often used to create backup copies of tables or for archiving records.
+
+22.The INSERT INTO Statements: INSERT INTO TABLE VALUES(1000); USED TO INSERT VALUES IN TABLE.
+
+23.The Update Statement: UPDATE EMP SET SAL=SAL+1000; USED TO UPDATE THE DATA
+
+24.The Delete Statements: DELETE FROM EMP WHERE ENAME='ALLEN'; USED TO DELETE RECORD FROM TABLE.
+
+25.BETWEEN … AND : BETWEEN RANGE OF TWO VALUES.
+
+26.What is the use of CASCADE CONSTRAINTS? USING CASCADE CONSTRAINT WE CAN DELETE DATA FROM THE DEPENDENT TABLE.
+
+27.Which system tables contain information on privileges granted and privileges obtained?
+ANS: USER_TAB_PRIVS_MADE, USER_TAB_PRIVS_RECD
+
+28.Which system table contains information on constraints on all the tables created?obtained?
+ANS: USER_CONSTRAINTS
+29.What does the following query do? SELECT SAL + NVL(COMM,0) FROM EMP;?
+ANS:
+
+
+
+30.What is the advantage of specifying WITH GRANT OPTION in the GRANT command?
+ANS: PRIVILEGE RECIVER CAN FURTHER GRANT PRIVILEGE HE HAS OBTAINED FROM OWNER TO ANY OTHER USER.
+31.Which command executes the contents of a specified file?
+ANS: START
+32.What is the value of comm and sal after executing the following query if the initial value of ‘sal’ is 10000 UPDATE EMP SET SAL = SAL + 1000, COMM = SAL*0.1;?
+ANS: SAL=11000, COMM=100
+
+33.Which command displays the SQL command in the SQL buffer, and then executes it?
+ANS: LIST OR L
+
+34.What command is used to get back the privileges offered by the GRANT command?
+ANS: RRVOKE
+
+35.Which date function is used to find the difference between two dates?
+ANS: ROUND
+
+36.What operator performs pattern matching?
+ANS: LIKE
+
+37.What is the use of the DROP option in the ALTER TABLE command?
+ANS: TO DROP COLUMN,CONTRAINT
+
+38.What operator tests column for the absence of data?
+ANS: NULL
+
+39.What are the privileges that can be granted on a table by a user to others?
+ANS: ALTER,DELETE,INDEX,INSERT,SELECT,UPDATE,REFERENCE
